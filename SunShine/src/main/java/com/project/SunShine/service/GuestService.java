@@ -1,6 +1,7 @@
 package com.project.SunShine.service;
 
-import java.util.Optional;
+import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,13 @@ import com.project.SunShine.dao.GuestDao;
 import com.project.SunShine.model.Guest;
 
 @Service
-public class personService {
+public class GuestService {
 
 	@Autowired
 	GuestDao dao;
-		public Guest getGuest(String guest) {
+		public Guest getGuest(Integer guest) {
 			System.out.println("we are in service layer..");
-		Guest getGuest= dao.findById(guest).orElse(new Guest());
+		Guest getGuest= dao.findById(guest).get();
 		if(getGuest!=null) {
 			System.out.println("in if"+ getGuest);
 			return getGuest;
@@ -25,4 +26,15 @@ public class personService {
 		}
 		
 	}
+		public List<Guest> getGuestList() {
+			
+			return dao.findAll();
+		}
+		public void saveGuest(Guest guest) {
+			dao.save(guest);
+		}
+		
+		public void saveGuestList(List<Guest> guest) {
+			dao.saveAll(guest);
+		}
 }
